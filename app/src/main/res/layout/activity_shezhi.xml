@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+   <RelativeLayout
+        android:id="@+id/myselftool"
+        android:layout_width="match_parent"
+        android:layout_height="50.0dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/gengduo_modifybiaoti12">
+        <ImageView
+            android:id="@+id/myselftool_text2"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/yonghuziliao"/>
+
+        <Button
+            android:id="@+id/go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:paddingLeft="20dp"
+            android:layout_weight="0.6"
+            android:text="返回"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/myselfmain_1"
+        android:layout_width="fill_parent"
+        android:layout_height="75dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+         >
+
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/mhost"
+        android:layout_marginTop="1dp"
+        android:ems="10"
+        android:text="姓名:"
+        />
+    <EditText
+    android:id="@+id/umac"
+    android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:layout_below="@+id/mhost"
+    android:layout_marginTop="1dp"
+    android:ems="10"
+    android:text="mac地址:"
+    />
+    <EditText
+    android:id="@+id/mima"
+    android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:layout_below="@+id/mhost"
+    android:layout_marginTop="1dp"
+    android:ems="10"
+    android:text="密码:"
+    />
+
+
+    <Button
+        android:id="@+id/save_person"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="87dp"
+        android:text="保存修改"
+        android:textColor="#ffffff"
+        android:textSize="20sp"></Button>
+
+</LinearLayout>

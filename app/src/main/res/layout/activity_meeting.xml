@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical" >
+
+<RelativeLayout
+    android:id="@+id/myselftool"
+    android:layout_width="match_parent"
+    android:layout_height="50.0dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/gengduo_modifybiaoti12">
+
+
+
+</RelativeLayout>
+
+<FrameLayout
+    android:id="@+id/username_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="70dp"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/uname"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:hint="请输入姓名"
+        android:maxLength="20"
+        android:paddingLeft="55dp"
+        android:paddingRight="60dp"></EditText>
+
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="21dp"
+        android:layout_gravity="left|center_vertical"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/contry_sn"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="+62"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:visibility="invisible" />
+</FrameLayout>
+    <Button
+    android:id="@+id/chaxun1"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
+    android:layout_marginTop="20dp"
+    android:text="查询"
+
+    android:textSize="20sp" >
+    </Button>
+    <Button
+        android:id="@+id/go_back1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="20dp"
+        android:text="返回"
+        android:textSize="16sp">
+
+    </Button>
+
+</LinearLayout>

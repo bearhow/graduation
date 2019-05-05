@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/mine_all"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:id="@+id/wodexiaoyuan_Lineraout02"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@+id/wodexiaoyuanLinearLayout">
+            <Button
+                android:id="@+id/h_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gengduo_beijingtiao"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:padding="10dp"
+                android:text="会议信息"
+                android:textColor="#666666"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/p_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gengduo_beijingtiao"
+                android:layout_margin="0.5dp"
+                android:layout_weight="1"
+                android:gravity="left|center_vertical"
+                android:padding="11dp"
+                android:text="个人信息"
+                android:textColor="#666666"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
