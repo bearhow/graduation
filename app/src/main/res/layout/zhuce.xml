@@ -14,16 +14,7 @@
         android:hint="请输入您的用户名"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/mac"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/resetpwd_edit_name"
-        android:layout_marginTop="-6dp"
-        android:drawableLeft="@android:drawable/ic_lock_idle_lock"
-        android:ems="10"
-        android:hint="请输入手机MAC地址"
-        android:inputType="textPassword" />
+
 
     <!--
 
@@ -43,7 +34,7 @@
         android:ems="10"
         android:id="@+id/resetpwd_edit_pwd_old"
         android:hint="请输入您的密码"
-        android:layout_below="@+id/mac" />
+        android:layout_below="@+id/resetpwd_edit_name" />
     <Button
         android:id="@+id/register_btn_cancel"
         android:layout_width="fill_parent"

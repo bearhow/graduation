@@ -4,16 +4,7 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <EditText
-        android:id="@+id/mname"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="27dp"
-        android:drawableLeft="@android:drawable/ic_menu_myplaces"
-        android:ems="10"
-        android:hint="请输入会议名称"
-        />
+
 
     <EditText
         android:id="@+id/mdate"

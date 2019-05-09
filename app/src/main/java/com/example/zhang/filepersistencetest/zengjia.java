@@ -20,7 +20,8 @@ public class zengjia extends AppCompatActivity {
     private EditText add;
     private EditText hoster;
     private EditText number;
-    Button btn;
+    private Button btn;
+    private String count ="";
 
 
     @Override
@@ -28,25 +29,36 @@ public class zengjia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zengjia);
         name = (EditText) findViewById(R.id.mname);
-        date =(EditText)findViewById(R.id.mdate);
-        add =(EditText)findViewById(R.id.madd);
-        hoster=(EditText)findViewById(R.id.mhost);
-    number=(EditText)findViewById(R.id.number);
-    btn=(Button)findViewById(R.id.sure1);
+        date = (EditText) findViewById(R.id.mdate);
+        add = (EditText) findViewById(R.id.madd);
+        hoster = (EditText) findViewById(R.id.mhost);
+        number = (EditText) findViewById(R.id.number);
+        btn = (Button) findViewById(R.id.sure1);
         btn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            int a=DBOpenHelper.insertMeeting(name.getText().toString(),date.getText().toString(),add.getText().toString(),hoster.getText().toString(),number.getText().toString());
-            if(a==1){
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        count=DBOpenHelper.insertMeeting(name.getText().toString(),date.getText().toString(),add.getText().toString(),hoster.getText().toString(),number.getText().toString());
+                    }
+                }).start();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(count.equals("success")){
                 showNormalDialog("增加会议："+name.getText().toString()+"成功！！！");
             }else{
                 showNormalDialog("增加会议："+name.getText().toString()+"失败！！！");
             }
-        }
-    });
+            }
+        });
 
-}
-    private void showNormalDialog(String name){
+    }
+
+    private void showNormalDialog(String name) {
         /* @setIcon 设置对话框图标
          * @setTitle 设置对话框标题
          * @setMessage 设置对话框消息提示

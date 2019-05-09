@@ -2,6 +2,8 @@ package com.example.zhang.filepersistencetest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -12,30 +14,34 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     private EditText accountEdit;
     private EditText passwordEdit;
-    private Button login;
+    private Button login;//登录按钮
     private CheckBox rememberPass;
     private static final int REQUEST_CODE_GO_TO_REGIST = 100;
-    Button btn1,btn2,btn3;
+
 
     private EditText mAccount;                        //用户名编辑
     private EditText mPwd;                            //密码编辑
     private EditText mPwdCheck;                       //密码编辑
     private EditText mMac;
-    private Button mSureButton;                       //确定按钮
-    private Button mCancelButton;                    //取消按钮
+    private Button register;                       //注册按钮
+    private Button logError;                    //忘记密码按钮
+
+
+    private String status="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        btn1=(Button)findViewById(R.id.login_button);
-        btn2=(Button)findViewById(R.id.login_error);
-        btn3=(Button)findViewById(R.id.register) ;
+
+        logError=(Button)findViewById(R.id.login_error);
+        register=(Button)findViewById(R.id.register) ;
         pref=PreferenceManager.getDefaultSharedPreferences(this);
         accountEdit = (EditText) findViewById(R.id.username_edit);
         passwordEdit = (EditText) findViewById(R.id.userpassword_edit);
@@ -43,39 +49,48 @@ public class LoginActivity extends BaseActivity {
         login = (Button) findViewById(R.id.login_button);
         //boolean isRemember=pref.getBoolean("remember_password",false);
         final Intent intent = getIntent();
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //String account = accountEdit.getText().toString();
-                //String password = passwordEdit.getText().toString();
+        login.setOnClickListener(this);
+        register.setOnClickListener(this);
+        logError.setOnClickListener(this);
 
-                if(DBOpenHelper.login(accountEdit.getText().toString())){
-                    Intent intent1=new Intent(LoginActivity.this,denglu.class);
-                    startActivity(intent1);
-                }else{
-                    showNormalDialog("用户名不存在");
-                }
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent2;
-                intent2 = new Intent(LoginActivity.this,miss_pass.class);
-                startActivity(intent2);
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,zhuce.class);
-                startActivity(intent);
-//                startActivityForResult(intent, REQUEST_CODE_GO_TO_REGIST);
-            }
-        });
+
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.login_button){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    //lists= DBOpenHelper.selectNumber(intent.getStringExtra("id"));
+                     status = DBOpenHelper.login(accountEdit.getText().toString(),passwordEdit.getText().toString());
 
+
+                }
+            }).start();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(status.equals("success")){
+                Intent intent1=new Intent(LoginActivity.this,denglu.class);
+                startActivity(intent1);
+            }else{
+                showNormalDialog("用户名密码错误！！！");
+            }
+        }
+        if(v.getId()==R.id.login_error){
+            Intent intent2;
+            intent2 = new Intent(LoginActivity.this,miss_pass.class);
+            startActivity(intent2);
+        }
+        if(v.getId()==R.id.register){
+            Intent intent=new Intent(LoginActivity.this,zhuce.class);
+            startActivity(intent);
+//                startActivityForResult(intent, REQUEST_CODE_GO_TO_REGIST);
+        }
+    }
     private void showNormalDialog(String name){
         /* @setIcon 设置对话框图标
          * @setTitle 设置对话框标题
@@ -98,5 +113,6 @@ public class LoginActivity extends BaseActivity {
         // 显示
         normalDialog.show();
     }
+
 
 }

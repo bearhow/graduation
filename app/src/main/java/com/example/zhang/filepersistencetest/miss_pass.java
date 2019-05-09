@@ -10,13 +10,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-public class miss_pass extends AppCompatActivity{
+public class miss_pass extends AppCompatActivity implements View.OnClickListener{
     private EditText mMac;                        //用户名编辑
-    private EditText mPwd_old;                            //密码编辑
+
     private EditText mPwd_new;                            //密码编辑
     private EditText mPwdCheck;                       //密码编辑
     private Button mSureButton;                       //确定按钮
     private Button mCancelButton;                     //取消按钮
+
+    private String count="" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +31,51 @@ public class miss_pass extends AppCompatActivity{
         mPwdCheck = (EditText) findViewById(R.id.resetpwd_edit_pwd_check);
 
         mSureButton = (Button) findViewById(R.id.resetpwd_btn_sure);
+        mSureButton.setOnClickListener(this);
         mCancelButton = (Button) findViewById(R.id.resetpwd_btn_cancel);
+        mCancelButton.setOnClickListener(this);
 
-        mSureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int a=DBOpenHelper.updatePassword(mMac.getText().toString(),mPwd_new.getText().toString());
-                if(a==1){
-                    showNormalDialog("注册成功！！！");
-                }else{
-                    showNormalDialog("注册失败！！！");
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.resetpwd_btn_sure){
+            String ps=mPwd_new.getText().toString();
+            String ps1=mPwdCheck.getText().toString();
+            if(mPwd_new.getText().toString().equals(mPwdCheck.getText().toString())) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        count  = DBOpenHelper.updatePassword(mMac.getText().toString(), mPwd_new.getText().toString());
+                    }
+                }).start();
+
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            }
-        });
 
+                if (count.equals("success")) {
+                    showNormalDialog("修改密码成功！！！");
+                    Intent intent=new Intent(miss_pass.this,LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    showNormalDialog("修改密码失败！！！");
+                    Intent intent=new Intent(miss_pass.this,miss_pass.class);
+                    startActivity(intent);
+                }
+            }else{
+                showNormalDialog("两次密码输入不一致");
+                Intent intent=new Intent(miss_pass.this,miss_pass.class);
+                startActivity(intent);
+            }
+        }
+        if(v.getId()==R.id.register_btn_cancel){
+
+        }
     }
 
     private void showNormalDialog(String name){

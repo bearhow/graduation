@@ -9,9 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class M_Info extends AppCompatActivity {
+public class M_Info extends AppCompatActivity implements View.OnClickListener{
     Button btn1, btn2, btn3, btn4, btn5;
     EditText meeting_name;
+    private String count="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,56 +24,72 @@ public class M_Info extends AppCompatActivity {
         btn3 = (Button) findViewById(R.id.delect);
         btn4 = (Button) findViewById(R.id.insert);
         btn5 = (Button) findViewById(R.id.insert_number);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(M_Info.this, chaxun.class);
-                String name= meeting_name.getText().toString();
-                intent.putExtra("meeting_name", name);
-                //String meeting_name = meeting_name.getText().toString();
-                startActivity(intent);
-            }
-
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(M_Info.this, xiugai.class);
-                startActivity(intent);
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int a = DBOpenHelper.delectMeeting(meeting_name.getText().toString());
-                if (a == 1) {
-                    showNormalDialog("删除会议：" + meeting_name.getText().toString() + "成功！！！");
-                } else {
-                    showNormalDialog("删除会议：" + meeting_name.getText().toString() + "失败！！！");
-                }
-            }
-        });
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent2;
-                intent2 = new Intent(M_Info.this, zengjia.class);
-                startActivity(intent2);
-            }
-        });
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                intent = new Intent(M_Info.this, Number.class);
-                intent.putExtra("meeting_name", meeting_name.getText());
-                startActivity(intent);
-            }
-        });
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
     }
+    @Override
+    public void onClick(View v) {
+        /**
+         * 查询会议人员
+         */
+        if(v.getId()==R.id.select){
+            Intent intent;
+            intent = new Intent(M_Info.this, chaxun.class);
+            String name= meeting_name.getText().toString();
+            intent.putExtra("meeting_name", name);
+            //String meeting_name = meeting_name.getText().toString();
+            startActivity(intent);
+        }
+        /**
+         * 修改会议
+         */
+        if(v.getId()==R.id.update){
+            Intent intent;
+            intent = new Intent(M_Info.this, xiugai.class);
+            intent.putExtra("meetingName",meeting_name.getText().toString());
+            startActivity(intent);
+        }
+        /**
+         * 增加会议
+         */
+        if(v.getId()==R.id.insert){
+            Intent intent2;
+            intent2 = new Intent(M_Info.this, zengjia.class);
+            startActivity(intent2);
+        }
+        /**
+         * 删除会议
+         */
+        if(v.getId()==R.id.delect){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    count=DBOpenHelper.delectMeeting(meeting_name.getText().toString());
+                }
+            }).start();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (count.equals("success")) {
+                showNormalDialog("删除会议：" + meeting_name.getText().toString() + "成功！！！");
+            } else {
+                showNormalDialog("删除会议：" + meeting_name.getText().toString() + "失败！！！");
+            }
+        }
 
+
+        if(v.getId()==R.id.insert_number){
+            Intent intent;
+            intent = new Intent(M_Info.this, Number.class);
+            intent.putExtra("meeting_name", meeting_name.getText().toString());
+            startActivity(intent);
+        }
+    }
     private void showNormalDialog(String name) {
         /* @setIcon 设置对话框图标
          * @setTitle 设置对话框标题

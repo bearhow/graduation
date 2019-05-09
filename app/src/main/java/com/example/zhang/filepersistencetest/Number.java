@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class Number extends AppCompatActivity {
+public class Number extends AppCompatActivity implements View.OnClickListener{
     private EditText name;
     private EditText MAC;
-    Button btn;
+    private Button btn;
+    private String meetingName;
+    private String count="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,24 +22,38 @@ public class Number extends AppCompatActivity {
         setContentView(R.layout.activity_number);
 
         final Intent intent = getIntent();
-        final String meeting_name=intent.getStringExtra("meeting_name");
+        meetingName=intent.getStringExtra("meeting_name");
 
         name=(EditText)findViewById(R.id.number_name);
         MAC=(EditText)findViewById(R.id.number_mac);
         btn=(Button)findViewById(R.id.resetpwd_btn_sure);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int a=DBOpenHelper.insertNumber(name.getText().toString(),MAC.getText().toString());
-                if(a==1){
-                    showNormalDialog("增加参会人员成功！！！");
-                }else{
-                    showNormalDialog("增加参会人员失败！！！");
-                }
-            }
-        });
+        btn.setOnClickListener(this);
 
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.resetpwd_btn_sure){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    count=DBOpenHelper.insertNumber(meetingName,name.getText().toString(),MAC.getText().toString());
+                }
+            }).start();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(count.equals("success")){
+                showNormalDialog("增加参会人员成功！！！");
+            }else{
+                showNormalDialog("增加参会人员失败！！！");
+            }
+        }
+
+    }
+
     private void showNormalDialog(String name){
         /* @setIcon 设置对话框图标
          * @setTitle 设置对话框标题
